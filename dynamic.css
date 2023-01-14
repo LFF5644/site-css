@@ -1,0 +1,113 @@
+<?
+	let {
+		imports="*",
+		sub=",",
+	}=input;
+	const css={
+		green:"{color:green}",
+		red:"{color:red}",
+		darkred:"{color:darkred}",
+		blue:"{color:blue}",
+		black:"{color:black}",
+		orange:"{color:orange}",
+		"scroll-y":"{overflow-y:scroll}",
+		"scroll-x":"{overflow-x:scroll}",
+		scroll:"{overflow:scroll}",
+		noScroll:"{overflow:unset}",
+		bold:"{font-weight:bold}",
+		underLine:"{text-decoration:underline;}",
+		underLineHOVER:":hover{text-decoration:underline}",
+		noLine:"{text-decoration:none}",
+		noSelect:"{user-select:none;}",
+		cursorPOINTER:"{cursor:pointer;}",
+		cursorDEFAULT:"{cursor:default;}",
+		cursorNONE:"{cursor:none;}",
+		cursorPROGRESS:"{cursor:progress;}",
+		cursorCOPY:"{cursor:copy;}",
+		displayFLEX:"{display:flex;}",
+		flex:"{flex:1;}",
+		styledBTN:`{border-radius:10px;
+			font-size:20px;
+			border-color:green;
+			color:yellow;
+			background-color:rgb(0,0,100);
+			border-width:3px;}`,
+		styledBTNMint:`{border-radius: 5px;
+			border-color:rgb(20,200,0);
+			color:rgb(10,255,170);
+			background-color: rgb(50,100,50);
+			border-width: 2px;}`,
+		fullScreen:"{font-size:300%;}",
+		boxText:`{text-align: left;
+			padding: 10px 10px 10px 10px;
+			border: 1px solid black;
+			margin-left: 5px;
+			margin-top: 5px;
+			margin-bottom: 5px;}`,
+		box:`{position:fixed;
+			top:50px;
+			left:35%;
+			right:auto;
+			text-align:center;
+			max-width:35%;
+			border:1px solid black;
+			padding:20px 20px 20px 20px;
+			margin:1px 1px 1px 1px;
+			background-color:rgb(255,120,30);}`,
+		niceBorder:`{border-top:5px green solid;
+			border-bottom:5px green solid;
+			border-left:1px red solid;
+			border-right:1px red solid;
+			border-radius:10px;
+			padding-bottom:10px;
+			margin-bottom:10px;
+			max-width:500px;}`,
+		unten:`{position:fixed;
+			text-align:center;
+			left:10px;
+			bottom:10px;}`,
+		fullWindow:`{position:absolute;
+			text-align:center;
+			left:0;
+			top:0;
+			margin:0;
+			border:0;
+			background-color:inherit;
+			width:100%;
+			height:100%;
+			max-width:100%;
+			color:inherit;}`,
+		topRight:`{position:absolute;
+			top:20px;
+			right:20px;}`,
+		topLeft:`{position:absolute;
+			top:20px;
+			left:20px;}`,
+	}
+	if(imports=="*"||!imports){
+		imports=Object.keys(css);
+	}else{
+		imports=imports.split(sub).map(item=>item.trim());
+	}
+	let html="";
+	let i="";
+	for(i of imports){
+		const keys=Object.keys(css);
+		const start=i.startsWith("*");
+		const end=i.endsWith("*");
+		const search=i.split("*").join("");
+		let filtered=[];
+		if(start&&end){filtered=keys.filter(item=>item.includes(search))}
+		else if(start){filtered=keys.filter(item=>item.endsWith(search))}
+		else if(end){filtered=keys.filter(item=>item.startsWith(search))}
+		else{filtered=[i]}
+		let className="";
+		for(className of filtered){
+			if(css[className]===undefined){continue;}
+			html+="."+className+css[className]
+				.split("\t").join("")
+				.split("\n").join("")+"\n";
+		}
+
+	}
+?><?=html?>
